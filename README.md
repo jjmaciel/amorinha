@@ -9,14 +9,6 @@ utilizadas na base de dados, não é necessário criar uma vez que o models de c
 e a cria
 
 
-git graph
-https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
-
-https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-
-https://learngitbranching.js.org/?locale=pt_BR
-
-
 A escola Amorinha está precisando de um Sistema de Gestão de Alunos (SGA) para controlar o cadastro de 
 alunos das turmas de Educação Infantil e ficamos felizes em tê-lo como a pessoa Engenheira de Software 
 responsável por desenvolver o Frontend dessa aplicação!! 💰💵
@@ -59,9 +51,3 @@ Dica: Utilize o próprio Trello para planejar o desenvolvimento.
 Chame o Tutor sempre que precisar.
 
 Um ótimo desafio a você! 
-
-
-./public = terá os arquivos que serão compartilhados entre todos os arquivos
-./src = onde está o projeto
-./src/components = será a pasta de destino dos componentes necessários para o App
-./src/pages = local de armazenamento das páginas
