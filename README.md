@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+ESTRUTURA
+1 - diretório frontend foi desenvolvido em React com as bibliotecas relacionadas nopackage.json
+2- no public/index.html tem um link do bootstrep.css, botstrep.js e jquery.js que é utilizado para
+esitlizara algumas partes do site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+3 - diretório backend foi desenvolvido em Node e é um webservice com conectado a um banco de dados localhost mongodb
+3 - para o projeto funcionar, você precisa ter instalado no seu computador o banco de dados mongodb. As tabelas
+utilizadas na base de dados, não é necessário criar uma vez que o models de cada tabela verifica sua existência
+e a cria
 
-## Available Scripts
 
-In the project directory, you can run:
+git graph
+https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
 
-### `npm start`
+https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+https://learngitbranching.js.org/?locale=pt_BR
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+A escola Amorinha está precisando de um Sistema de Gestão de Alunos (SGA) para controlar o cadastro de 
+alunos das turmas de Educação Infantil e ficamos felizes em tê-lo como a pessoa Engenheira de Software 
+responsável por desenvolver o Frontend dessa aplicação!! 💰💵
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Nós conversamos com o cliente e levantamos os seguintes requisitos para entregar um MVP da aplicação:
 
-### `npm run build`
+1. Um formulário para o cadastro dos Alunos contendo os seguintes campos:
+    1. Nome
+    2. Data de Nascimento
+    3. Nome do Responsável pela criança
+    4. Telefone de Contato do Responsável pela criança
+    5. Em caso de emergência avisar: (Pais, Tios, Avós, Padrinhos)
+    6. Telefone para Emergências
+    7. Possui Restrição Alimentar
+    8. Descrição das Restrições Alimentares
+    9. Autorização de fotos e vídeos da criança para uso escolar
+    10. Lista de autorizados a buscar a criança. Ex. Pedro – Padrinho, Maria – Tia
+    11. Turma
+    12. Observações adicionais
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Uma listagem de Alunos que permita editar e excluir alunos e apresente para o usuário os principais campos:
+    1. Nome
+    2. Data de Nascimento
+    3. Turma
+    4. Telefone para Emergências
+    5. Em caso de emergência avisar
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Um campo de texto acima da listagem que será utilizado para filtrar os alunos pelo nome.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+• Na tela de cadastro o campo “Descrição das Restrições Alimentares”  somente ficará visível caso a criança possua restrições alimentares;
+• No campo Turma será apresentado para escolha uma lista de turmas disponíveis, você não precisa criar uma tela de cadastro para elas, somente uma consulta das mesmas.
+• Os campos “Possui Restrição Alimentar” e Autorização para uso de fotos e vídeos da criança para uso escolar serão do tipo Checkbox
+• A função editar colocará os dados do aluno no formulário de cadastro
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Agora é com você!
+Realize anotações necessárias, planeje o desenvolvimento do FrontEnd e avance para os próximos passos.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Dica: Utilize o próprio Trello para planejar o desenvolvimento.
+Chame o Tutor sempre que precisar.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Um ótimo desafio a você! 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+./public = terá os arquivos que serão compartilhados entre todos os arquivos
+./src = onde está o projeto
+./src/components = será a pasta de destino dos componentes necessários para o App
+./src/pages = local de armazenamento das páginas
