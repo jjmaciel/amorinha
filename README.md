@@ -9,6 +9,7 @@ utilizadas na base de dados, não é necessário criar uma vez que o models de c
 e a cria
 
 
+## Exercício 07 de React do curso DevInHouse
 A escola Amorinha está precisando de um Sistema de Gestão de Alunos (SGA) para controlar o cadastro de 
 alunos das turmas de Educação Infantil e ficamos felizes em tê-lo como a pessoa Engenheira de Software 
 responsável por desenvolver o Frontend dessa aplicação!! 💰💵
