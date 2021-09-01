@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PageArea } from './styled';
 import { PageContainer, PageTitle, ErrorMessage, SuccessMessage } from '../../components/MainComponents'
 import useAPI from '../../helpers/AmorinhaAPI';
@@ -8,6 +8,8 @@ function Page(){
 
     const api = useAPI();
 
+    const fileField = useRef();
+
     const [name, setName] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [responsableName, setResponsableName] = useState('');
@@ -16,29 +18,65 @@ function Page(){
     const [phoneEmergency, setPhoneEmergency] = useState('');
     const [foodRestriction, setFoodRestriction] = useState('');
     const [descriptionFoodRestriction, setDescriptionFoodRestriction] = useState('');
-    const [imageAuthorization, setImageAuthorization] = useState('');
+    const [imageAuthorization, setImageAuthorization] = useState(false);
     const [authorizedPeople , setAuthorizedPeople] = useState('');
-    const [schoolClass, setSchoolClass] = useState('');
+    const [classes, setClasses] = useState('');
     const [additionalNotes, setAdditionalNotes] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [disable, setDisable] = useState(false);
+
+    const [classesList, setClassesList] = useState([]);
+
+
+    useEffect(() => {
+        const getClasses = async () => {
+            const json = await api.getClasses();
+            setClassesList(json.classes);
+        };
+
+        getClasses();
+    }, [])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // setDisable(true);
         setError('');
 
-        const json = await api.addStudent( name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes);
+        const fData = new FormData();
+        fData.append('name', name);
+        fData.append('birthDate', birthDate);
+        fData.append('responsableName', responsableName);
+        fData.append('phone', phone);
+        fData.append('emergencyWarning', emergencyWarning);
+        fData.append('phoneEmergency', phoneEmergency);
+        fData.append('foodRestriction', foodRestriction);
+        fData.append('descriptionFoodRestriction', descriptionFoodRestriction);
+        fData.append('imageAuthorization', imageAuthorization);
+        fData.append('authorizedPeople', authorizedPeople);
+        fData.append('classes', classes);
+        fData.append('additionalNotes', additionalNotes);
+        
+        if (fileField.current.files.length > 0){
+            fData.append('name', fileField.current.files[0]);
+        }
+
+        
+        const json = await api.addStudent(fData);
+        console.log(json.id);
         
         if (json.error){
             setError(json.error);
         } else {
             setSuccess("Cadastro realizado com sucesso!");
+            // alert("Cadastro realizado com sucesso!");
             setName('');
             setResponsableName('');
             setPhone('');
             /**CRIAR UM BOTÃO EDITAR */
+            // history.push(`/students/edit/${json.id}`);
+            // return;
         }
 
         setDisable(false);
@@ -162,10 +200,10 @@ function Page(){
                         <div className="area-title">Autorização Para Uso da Imagem</div>
                         <div className="area-input">
                             <input 
-                                type="text" 
+                                type="checkbox" 
                                 disabled={disable} 
                                 value={imageAuthorization}
-                                onChange={ e => setImageAuthorization(e.target.value) }
+                                onChange={ e => setImageAuthorization(!imageAuthorization) }
                                 // required
                             />
                         </div>
@@ -187,24 +225,38 @@ function Page(){
                     <label className="area">
                         <div className="area-title">Turma</div>
                         <div className="area-input">
-                            <input 
-                                type="text" 
-                                disabled={disable} 
-                                value={schoolClass}
-                                onChange={ e => setSchoolClass(e.target.value) }
+                            <select
+                                disable={disable}
+                                onChange={e=>setClasses(e.target.value)}
                                 // required
-                            />
+                            >
+                                <option></option>
+                                {classesList && classesList.map(i => 
+                                    <option key={i._id} value={i._id}> {i.name} </option>
+                                )}
+                            </select>
                         </div>
                     </label>
 
                     <label className="area">
                         <div className="area-title">Observações Adicionais</div>
                         <div className="area-input">
-                            <input 
+                            <textarea 
                                 type="text" 
                                 disabled={disable} 
                                 value={additionalNotes}
                                 onChange={ e => setAdditionalNotes(e.target.value) }
+                            ></textarea>
+                        </div>
+                    </label>
+
+                    <label className="area">
+                        <div className="area-title">Adicionar Foto</div>
+                        <div className="area-input">
+                            <input 
+                                type="file"
+                                disabled={disable}
+                                ref={fileField}
                             />
                         </div>
                     </label>

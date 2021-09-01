@@ -1,0 +1,19 @@
+git graph
+https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
+
+https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+https://learngitbranching.js.org/?locale=pt_BR
+
+npm install react-text-mask text-mask-addons --save
+text-mask-addons = complemento do react-text-mask
+
+import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+
+ver aplicação OLX Clone - AddAd (2 - estrutura)
+
+new.images.push({
+    url,
+    default: false
+});

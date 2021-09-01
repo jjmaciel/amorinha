@@ -3,6 +3,37 @@ import qs from 'qs';
 
 const BASEAPI = 'http://localhost:5000';
 
+const apiFetchFile = async (endpoint, body) => {
+    // verifica se não tem um token junto no body (corpo da mensagem), neste caso ele busca
+    // nos Cookies pelo token e agrega junto no body
+    if (!body.token){
+        let token = Cookies.get('token');
+        if (token){
+            body.append = ('token', token);
+        }
+    }
+
+    // cria uma constante de comunicação com o webservice envaindo o endereço (BASEAPI) + a rota (endpoint)
+    // enviando body para o webservice
+    const res = await fetch(BASEAPI+endpoint, {
+        method:'POST',
+        body
+    });
+
+    // a const json recebe a resposta de um json vindo do webservice
+    const json = await res.json();
+    
+    // se nessa resposta tiver um parâmetro chamado notallowed, é pq deu algum erro
+    // este notallowed vem do backend de um middlewares chamado Auth.js, que é o teste de privacidade de uma rota.
+   /* if (json.notallowed){
+        window.location.href = '/login';
+        return;
+    } */
+
+    // se não tiver o notallowed, a resposta do webservice é retornada
+    return json;
+}
+
 // envaindo dados para o webservice via POST
 const apiFetchPost = async (endpoint, body) => {
 
@@ -99,10 +130,11 @@ const AmorinhaAPI = {
         return json;
     },
 
-    addStudent: async (name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes) => {
-        const json = await apiFetchPost(
+    // envia dados e arquivos. Tudo esta no array fData
+    addStudent: async (fData) => {
+        const json = await apiFetchFile(
             '/student/add',
-            {name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes}
+            fData
         );
 
         return json;
@@ -120,6 +152,14 @@ const AmorinhaAPI = {
     getStudent: async (id) => {
         const json = await apiFetchGet(
             '/student/info/:'+id,
+        );
+
+        return json;
+    },
+
+    getClasses: async () => {
+        const json = await apiFetchGet(
+            '/classes/list',
         );
 
         return json;

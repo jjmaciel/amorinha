@@ -13,7 +13,8 @@ const modelSchema = new mongoose.Schema({
     imageAuthorization: Boolean,
     authorizedPeople: String,
     schoolClass: String,
-    additionalNotes: String
+    additionalNotes: String,
+    photo: String
 });
 
 const modelStudent = 'student';

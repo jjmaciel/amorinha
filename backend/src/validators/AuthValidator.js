@@ -36,44 +36,4 @@ module.exports = {
         },
     }),
 
-    add: checkSchema({
-        name: {
-            notEmpty: true,
-            errorMessage: "O Nome não pode estar vazio"
-        },
-        birthdata: {
-            
-        },
-        responsableName: {
-            
-        },
-        phone: {
-            
-        }, 
-        emergencyWarning: {
-            
-        },
-        phoneEmergency: {
-            
-        },
-        foodRestriction: {
-            
-        },
-        descriptionFoodRestriction: {
-            
-        },
-        imageAuthorization: {
-            
-        },
-        authorizedPeople: {
-            
-        },
-        schoolClass: {
-            
-        },
-        additionalNotes: {
-           
-        }
-
-    })
 };

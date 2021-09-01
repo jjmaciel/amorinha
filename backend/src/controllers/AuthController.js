@@ -76,7 +76,7 @@ module.exports = {
             token: token,
         });
         // salvando este objeto na base de dados
-        // await newUser.save();
+        await newUser.save();
 
         // retornando o token para que o usuário já se logue
         res.json({ token });

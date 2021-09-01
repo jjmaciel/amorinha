@@ -9,7 +9,6 @@ const modelSchema = new mongoose.Schema({
 });
 
 const modelName = 'User';
-console.log(modelSchema);
 
 // verifica se o model User existe no banco de dados
 if (mongoose.connection && mongoose.connection.models[modelName]){

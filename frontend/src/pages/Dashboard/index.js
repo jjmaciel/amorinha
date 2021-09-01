@@ -5,7 +5,7 @@ import { PageContainer } from '../../components/MainComponents'
 import useAPI from '../../helpers/AmorinhaAPI';
 import img_student from './aluno.png';
 
-let timer;
+// let timer;
 
 function Page(){
 
@@ -19,33 +19,58 @@ function Page(){
     const query = useQueryString();
 
     const [students, setStudents] = useState([]);
+    const [studentsLost, setStudentsLost] = useState([]);
     const [query_search, setSearch] = useState(query.get('query_search') != null ? query.get('query_search') : '');
 
     const getStudents = async () => {
         const json = await api.searchStudent({
-            sort: 'asc',
-            limit: 10,
+            sort: ({name: ('asc')}),
+            // limit: 3,
             offset:0,
             query_search
+            // pega registros do último para o primeiro ({_id:-1})
+            // pega registros do primeiro para o último ({_id:1})
+            // busca aluno por nome em ordem crecente: ({name: ('asc')})
+            // busca aluno por nome em ordem decrecente: ({name: ('desc')})
         });
         setStudents(json.student_array);
     };
-    
+
     useEffect(() => {
-        
-        if (query_search){
-            history.replace({
-                search: `?query_search=${query_search}`
+        const getLostStudents = async () => {
+            const json = await api.searchStudent({
+                sort: ({_id:-1}),
+                limit: 3,
+                offset:0,
+                query_search
+                // pega registros do último para o primeiro ({_id:-1})
+                // pega registros do primeiro para o último ({_id:1})
+                // busca aluno por nome em ordem crecente: ({name: ('asc')})
+                // busca aluno por nome em ordem decrecente: ({name: ('desc')})
             });
-        }
+        
+            setStudentsLost(json.student_array);
+        };
 
-        if (timer){
-            clearTimeout(timer);
-        }
+        getLostStudents();
+    },[])
 
-        timer = setTimeout(getStudents, 3000);
+    
+    // useEffect(() => {
+        
+    //     if (query_search){
+    //         history.replace({
+    //             search: `?query_search=${query_search}`
+    //         });
+    //     }
 
-    }, [query_search]);
+    //     if (timer){
+    //         clearTimeout(timer);
+    //     }
+
+    //     timer = setTimeout(getStudents, 3000);
+
+    // }, [query_search]);
 
 
     return(
@@ -53,7 +78,7 @@ function Page(){
             <SearchArea>
                 <PageContainer>
                     <div className="search-box">
-                        <form method="GET">
+                        <form method="GET" onSubmit={getStudents}>
                             <input 
                                 type="text" 
                                 name="query_search" 
@@ -72,20 +97,36 @@ function Page(){
             </SearchArea>
             <PageContainer>
                 <PageArea>
-                    <div className="container-student">
-                        {students.map((i,k) =>
-                            <Link key={k} to={`/student/info/${i.id}`} className="list-students">
-                                <div className="img_student">
-                                    <img src={img_student} alt="aluno" />
-                                </div>
-                                <div className="data-student">
-                                    <span>{i.name}</span><br/>
-                                    <span>{i.responsableName}</span><br/>
-                                    <span>{i.phone}</span><br/>
-                                </div>
-                            </Link>
-                        )}
-                    </div>
+                    {students && 
+                        <div className="container-student">
+                            {students.map((i,k) =>
+                                <Link key={k} to={`/student/info/${i.id}`} className="list-students">
+                                    <div className="img_student">
+                                        <img src={img_student} alt="aluno" />
+                                    </div>
+                                    <div className="data-student">
+                                        <span>{i.name}</span><br/>
+                                        <span>{i.responsableName}</span><br/>
+                                        <span>{i.phone}</span><br/>
+                                    </div>
+                                </Link>
+                            )}
+                        </div>
+                    }
+                        <div className="container-student">
+                            {studentsLost.map((i,k) =>
+                                <Link key={k} to={`/student/info/${i.id}`} className="list-students">
+                                    <div className="img_student">
+                                        <img src={img_student} alt="aluno" />
+                                    </div>
+                                    <div className="data-student">
+                                        <span>{i.name}</span><br/>
+                                        <span>{i.responsableName}</span><br/>
+                                        <span>{i.phone}</span><br/>
+                                    </div>
+                                </Link>
+                            )}
+                        </div>
                 </PageArea>
             </PageContainer>
         </>

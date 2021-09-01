@@ -26,7 +26,7 @@ export const PageArea = styled.div`
             .area-input {
                 flex:1;
                 
-                input {
+                input, textarea, select {
                     width:100%;
                     font-size:14px;
                     padding: 10px;
