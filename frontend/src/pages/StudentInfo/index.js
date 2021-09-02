@@ -3,7 +3,8 @@ import { useParams  } from 'react-router-dom';
 import { PageArea } from './styled';
 import { PageContainer } from '../../components/MainComponents'
 import useAPI from '../../helpers/AmorinhaAPI';
-import img_student from './aluno.png';
+
+const BASEIMG = "http://localhost:5000/media/"
 
 function Page(){
 
@@ -27,8 +28,8 @@ function Page(){
                 <PageArea>
                 <div className="container-student">
                     <div className="row">
-                        <div className="col-md-3">  
-                            <img src={img_student} alt="aluno" />
+                        <div className="col-md-3 img-students">  
+                            <img src={BASEIMG+student.photo} alt="aluno" />
                         </div>
                         <div className="col-md-3 primary-info">
                             <p>Aluno</p>

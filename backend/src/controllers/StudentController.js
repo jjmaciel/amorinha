@@ -20,10 +20,10 @@ const addImage = async (buffer) => {
 
 module.exports = {
     add: async (req, res) => {
-        let { name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes } = req.body;
+        let { name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes, id=0 } = req.body;
         
         const newStudent = new Student();
-        newStudent.name = name;
+        newStudent.name = "Didi Costa";
         newStudent.birthDate = birthDate;
         newStudent.responsableName= responsableName;
         newStudent.phone= phone; 
@@ -35,7 +35,7 @@ module.exports = {
         newStudent.authorizedPeople= authorizedPeople;
         newStudent.schoolClass= schoolClass;
         newStudent.additionalNotes= additionalNotes;
-            
+          
     
         if(req.files){
             if(['image/jpeg', 'image/jpg', 'image/png'].includes(req.files.name.mimetype)){
@@ -43,9 +43,9 @@ module.exports = {
                 newStudent.photo = url;
             }
         }
+
+        const student = await newStudent.updateOne({_id: "613111cab77dcb6319f53fd3"});
         
-        // salvando na base de dados
-        const student = await newStudent.save();
         res.json({id: student._id});
    /*    
        // #######################################################################################################33
@@ -143,7 +143,8 @@ module.exports = {
                 imageAuthorization: student[i].imageAuthorization,
                 authorizedPeople: student[i].authorizedPeople,
                 schoolClass: student[i].schoolClass,
-                additionalNotes: student[i].additionalNotes
+                additionalNotes: student[i].additionalNotes,
+                photo: student[i].photo
 
             });
         }

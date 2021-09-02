@@ -10,6 +10,7 @@ function Page(){
 
     const fileField = useRef();
 
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [responsableName, setResponsableName] = useState('');
@@ -25,6 +26,7 @@ function Page(){
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [disable, setDisable] = useState(false);
+    const [button, setButton] = useState('Cadastrar');
 
     const [classesList, setClassesList] = useState([]);
 
@@ -38,10 +40,29 @@ function Page(){
         getClasses();
     }, [])
 
+    const getStudent = async (id) => {
+        const json = await api.getStudent(id);
+
+        setId(id);
+        setName(json.student.name);
+        setBirthDate(json.student.birthDate);
+        setResponsableName(json.student.responsableName);
+        setPhone(json.student.phone);
+        setEmergencyWarning(json.student.emergencyWarning);
+        setFoodRestriction(json.student.foodRestriction);
+        setDescriptionFoodRestriction(json.student.descriptionFoodRestriction);
+        setImageAuthorization(json.student.imageAuthorization);
+        setAuthorizedPeople(json.student.authorizedPeople);
+        setClasses(json.student.classes);
+        setAdditionalNotes(json.student.additionalNotes);
+        setButton('Editar');
+        
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setDisable(true);
+        setDisable(true);
         setError('');
 
         const fData = new FormData();
@@ -62,21 +83,19 @@ function Page(){
             fData.append('name', fileField.current.files[0]);
         }
 
+        if (id){
+            fData.append('id', id);
+        }
         
         const json = await api.addStudent(fData);
-        console.log(json.id);
-        
+                
         if (json.error){
             setError(json.error);
         } else {
             setSuccess("Cadastro realizado com sucesso!");
-            // alert("Cadastro realizado com sucesso!");
-            setName('');
-            setResponsableName('');
-            setPhone('');
             /**CRIAR UM BOTÃO EDITAR */
             // history.push(`/students/edit/${json.id}`);
-            // return;
+            getStudent(json.id);
         }
 
         setDisable(false);
@@ -264,7 +283,7 @@ function Page(){
                     <label className="area">
                         <div className="area-title"></div>
                         <div className="area-input">
-                            <button disabled={disable}>Cadastrar</button>
+                            <button disabled={disable}>{button}</button>
                         </div>
                     </label>
                 </form>

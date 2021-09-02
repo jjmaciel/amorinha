@@ -3,9 +3,9 @@ import { Link, useLocation, useHistory  } from 'react-router-dom';
 import { PageArea, SearchArea } from './styled';
 import { PageContainer } from '../../components/MainComponents'
 import useAPI from '../../helpers/AmorinhaAPI';
-import img_student from './aluno.png';
 
 // let timer;
+const BASEIMG = "http://localhost:5000/media/"
 
 function Page(){
 
@@ -55,6 +55,8 @@ function Page(){
         getLostStudents();
     },[])
 
+    console.log(studentsLost);
+
     
     // useEffect(() => {
         
@@ -102,7 +104,7 @@ function Page(){
                             {students.map((i,k) =>
                                 <Link key={k} to={`/student/info/${i.id}`} className="list-students">
                                     <div className="img_student">
-                                        <img src={img_student} alt="aluno" />
+                                        <img src={BASEIMG+i.photo} alt="aluno" />
                                     </div>
                                     <div className="data-student">
                                         <span>{i.name}</span><br/>
@@ -117,7 +119,7 @@ function Page(){
                             {studentsLost.map((i,k) =>
                                 <Link key={k} to={`/student/info/${i.id}`} className="list-students">
                                     <div className="img_student">
-                                        <img src={img_student} alt="aluno" />
+                                        <img src={BASEIMG+i.photo} alt="aluno" />
                                     </div>
                                     <div className="data-student">
                                         <span>{i.name}</span><br/>

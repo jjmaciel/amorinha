@@ -6,6 +6,13 @@ export const PageArea = styled.div`
         margin-top:20px;
         margin-left:20px;
 
+        .img-students {
+
+            img {
+                width: 80px;
+            }
+        }
+
         .primary-info{
             color: #6f0582;
             font-weight: bold;
