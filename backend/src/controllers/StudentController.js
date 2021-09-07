@@ -23,7 +23,7 @@ module.exports = {
         let { name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes, id=0 } = req.body;
         
         const newStudent = new Student();
-        newStudent.name = "Didi Costa";
+        newStudent.name = name;
         newStudent.birthDate = birthDate;
         newStudent.responsableName= responsableName;
         newStudent.phone= phone; 
@@ -35,67 +35,19 @@ module.exports = {
         newStudent.authorizedPeople= authorizedPeople;
         newStudent.schoolClass= schoolClass;
         newStudent.additionalNotes= additionalNotes;
+        newStudent.photo = 'default.jpg';
           
     
         if(req.files){
-            if(['image/jpeg', 'image/jpg', 'image/png'].includes(req.files.name.mimetype)){
-                let url = await addImage(req.files.name.data);
+            if(['image/jpeg', 'image/jpg', 'image/png'].includes(req.files.photo.mimetype)){
+                let url = await addImage(req.files.photo.data);
                 newStudent.photo = url;
             }
         }
 
-        const student = await newStudent.updateOne({_id: "613111cab77dcb6319f53fd3"});
+        const student = await newStudent.save();
         
         res.json({id: student._id});
-   /*    
-       // #######################################################################################################33
-        // depois dos dados passar pela validação Auth.private
-        const errors = validationResult(req);
-        // verifica-se se tem alguma mensagem de erro
-        if (!errors.isEmpty()){
-            res.json({error: errors.mapped()});
-        }
-
-        // se não tem erros, o matcheData passa as informações para a const data
-        const data = matchedData(req);
-
-        // verifica se na requisição foi enviado arquivos e se esses arquivos são do tipo imagem
-        if (req.files && req.files.img){
-            // verifica se o tipo de imagem é com as extensões jpeg, jpg, png. Se sim, então chama a função addImage que retorna o nome da imagem criada e
-            // armazenada no diretório ./public/media/
-            if (['image/jpeg', 'image/jpg', 'image/png'].includes(req.files.img.mimetype)){
-                let image_url = await addImage(req.files.img.data);
-            }
-        }
-*/
-        /**
-         * COLOCAR AQUI UM TESTE PARA VERIFICAR SE O CADASTRO JÁ EXISTE
-         * 
-         */
- /*       const newStudent = new Student({
-            name: data.name,
-            birthdata: data.birthdata,
-            responsableName: data.responsableName,
-            phone: data.phone, 
-            emergencyWarning: data.emergencyWarning,
-            phoneEmergency: data.phoneEmergency,
-            foodRestriction: data.foodRestriction,
-            descriptionFoodRestriction: data.descriptionFoodRestriction,
-            imageAuthorization: data.imageAuthorization,
-            authorizedPeople: data.authorizedPeople,
-            schoolClass: data.schoolClass,
-            additionalNotes: data.additionalNotes
-            
-        });
-        
-        // salvando na base de dados
-        await newStudent.save();
-*/
-        /* se eu quiser um retorno do id desse processo, devo fazer assim:
-        const student_id = await newStudent.save();
-        res.json({id: student_id._id});*/
-
-        // res.json({feito: "feito"});
 
     },
 
@@ -152,15 +104,52 @@ module.exports = {
         res.json({student_array, total});
     },
 
+
+
+
     info: async (req, res) => {
         student_id = (req.params.id).replace(":", "");
-        let student = await Student.findOne({_id: student_id });
+        let student = await Student.findOne({_id: student_id });       
 
         res.json({student});
     },
 
-    editAction: async (req, res) => {
 
+
+
+    edit: async (req, res) => {
+        
+        let { name, birthDate, responsableName, phone, emergencyWarning, phoneEmergency, foodRestriction, descriptionFoodRestriction, imageAuthorization, authorizedPeople, schoolClass, additionalNotes } = req.body;
+        
+        let updateStudent = {
+            name : name,
+            birthDate : birthDate,
+            responsableName: responsableName,
+            phone: phone, 
+            emergencyWarning: emergencyWarning,
+            phoneEmergency: phoneEmergency,
+            foodRestriction: foodRestriction,
+            descriptionFoodRestriction: descriptionFoodRestriction,
+            imageAuthorization: (imageAuthorization == 'true' ? true : false),
+            authorizedPeople: authorizedPeople,
+            schoolClass: schoolClass,
+            additionalNotes: additionalNotes
+        }
+        
+          
+    
+        if(req.files){
+            if(['image/jpeg', 'image/jpg', 'image/png'].includes(req.files.photo.mimetype)){
+                let url = await addImage(req.files.photo.data);
+                updateStudent.photo = url;
+            }
+        }
+
+        student_id = req.params.id.replace(":", "");
+        const student = await Student.findByIdAndUpdate(student_id, {$set: updateStudent}, { new: true } );
+        
+        res.json({student});
+        
     },
 
 };

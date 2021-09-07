@@ -32,6 +32,8 @@ router.post('/student/add', StudentController.add);
 router.get('/student/list', StudentController.list);
 // rota para pegar um só estudante
 router.get('/student/info/:id', StudentController.info);
+// rota para editar dados de um estudante através do ID
+router.post('/student/edit/:id', StudentController.edit);
 // rota para pegar as turmas
 router.get('/classes/list', ClassesController.getClasses);
 

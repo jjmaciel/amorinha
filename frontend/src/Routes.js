@@ -4,6 +4,7 @@ import { SwitchCase, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home/';
 import Login from './pages/Login/';
 import CadAluno from './pages/Cadaluno/';
+import EditAluno from './pages/Cadaluno/edit';
 import SignUp from './pages/Signup';
 import DeshBoard from './pages/Dashboard';
 import StudentInfo from './pages/StudentInfo';
@@ -34,6 +35,10 @@ export default  () =>{
 
           <Route path="/student/info/:id">
             <StudentInfo/>
+          </Route>
+
+          <Route path="/student/edit/:id">
+            <EditAluno/>
           </Route>
 
           <Route>

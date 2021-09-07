@@ -1,3 +1,4 @@
+import { id } from "date-fns/locale";
 import Cookies from "js-cookie";
 import qs from 'qs';
 
@@ -73,7 +74,7 @@ const apiFetchPost = async (endpoint, body) => {
 
 // o processo de GET é muito semelhante ao do POST, a diferença que uma URL é enviada para o webservice
 const apiFetchGet = async (endpoint, body = []) => {
-
+    console.log(endpoint);
     // verifica se não tem um token junto no body (corpo da mensagem), neste caso ele busca
     // nos Cookies pelo token e agrega junto no body
     if (!body.token){
@@ -152,6 +153,15 @@ const AmorinhaAPI = {
     getStudent: async (id) => {
         const json = await apiFetchGet(
             '/student/info/:'+id,
+        );
+
+        return json;
+    },
+
+    editStudent: async (id, fData) => {
+        const json = await apiFetchFile(
+            '/student/edit/:'+id,
+            fData
         );
 
         return json;
